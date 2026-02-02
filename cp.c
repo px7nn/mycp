@@ -1,10 +1,14 @@
 #include <stdio.h>
+#include <fcntl.h>
 
 void HandleCP(int argc, char *args[]){
-	printf("Source:\t");
-	for(int i=1; i<argc - 1; i++)
-		printf("\t%s", args[i]);
-	printf("\nDesitination:\t%s\n", args[argc-1]);
+	int source_fd = open(args[1], O_RDONLY);
+	if(source_fd == -1){
+		printf("%s: cannot stat '%s': No such file or directory\n", args[0], args[1]);
+		return;
+	}
+	int target_fd = open(args[argc -1], O_CREAT, 0644);
+	printf("T_FD: %d", target_fd);
 }
 
 int main(int argc, char *args[]){
