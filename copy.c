@@ -1,14 +1,23 @@
 #include <stdio.h>
 #include <fcntl.h>
 
+#define BUFFER_SIZE 128
+
 void HandleCP(int argc, char *args[]){
 	int source_fd = open(args[1], O_RDONLY);
-	if(source_fd == -1){
+	if(source_fd < 0){
 		printf("%s: cannot stat '%s': No such file or directory\n", args[0], args[1]);
 		return;
 	}
-	int target_fd = open(args[argc -1], O_CREAT, 0644);
-	printf("T_FD: %d", target_fd);
+	int target_fd = open(args[argc -1], O_WRONLY | O_CREAT, 0644);
+	if(target_fd < 0){
+		printf("Error in creating dest file");
+		return;
+	}
+	char buffer[BUFFER_SIZE];
+	size_t b_read;
+	while((b_read = read(source_fd, buffer, BUFFER_SIZE)) > 0)
+		write(target_fd, buffer, b_read);
 }
 
 int main(int argc, char *args[]){
