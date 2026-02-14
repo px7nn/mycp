@@ -6,7 +6,7 @@ int buffer_size = 128;
 
 int main(int argc, char *args[]){
 	if(argc != 3){
-		printf("Usage: %s <source> <destination>");
+		printf("Usage: %s <source> <destination>", args[0]);
 		return 1;
 	}
 	
