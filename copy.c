@@ -12,13 +12,13 @@ int main(int argc, char *args[]){
 	
 	int fd_src = open(args[1], O_RDONLY);
 	if(fd_src < 0){
-		perror("Error reading source");
+		perror("Error opening source file");
 		return 1;
 	}
 
 	int fd_dst = open(args[2], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if(fd_dst < 0){
-		perror("Error reading source");
+		perror("Error opeinig destination file");
 		close(fd_src);
 		return 1;
 	}
@@ -29,7 +29,7 @@ int main(int argc, char *args[]){
 		write(fd_dst, buffer, bytesRead);
 
 	if(bytesRead < 0){
-		perror("Error reading");
+		perror("Error reading source");
 	}
 
 	close(fd_src);
